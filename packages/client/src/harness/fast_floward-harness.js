@@ -127,8 +127,12 @@ export default class FastFlowardHarness extends LitElement {
       
         <!-- TODO: Implement this action card -->
         <!-- NOTE: This is a transaction -->
-        <action-card title="DAY 4: Kitty Items Market - Sell Market Item">
-      
+        <action-card title="DAY 4: Kitty Items Market - Sell Market Item" description="Sell Market Item" action="kittyItemsMarketSellMarketItem" method="post"
+        fields="signer itemID price">
+          <account-widget field="signer" label="Signer">
+          </account-widget>
+          <text-widget field="itemID" label="Item ID" placeholder="0"></text-widget>
+          <text-widget field="price" label="Price" placeholder="1.0"></text-widget>
         </action-card>
       
         <action-card title="DAY 4: Kitty Items Market - Remove Market Item"
@@ -141,14 +145,20 @@ export default class FastFlowardHarness extends LitElement {
       
         <!-- TODO: Implement this action card -->
         <!-- NOTE: This is a transaction -->
-        <action-card title="DAY 4: Kitty Items Market - Buy Market Item">
-      
+        <action-card title="DAY 4: Kitty Items Market - Buy Market Item" description="Buy a Kitty Item from the Marketplace" action="kittyItemsMarketBuyMarketItem" method="post"
+        fields="signer itemID marketCollectionAddress">
+          <account-widget field="signer" label="Signer"></account-widget>
+          <text-widget field="itemID" label="Item ID" placeholder="0"></text-widget>
+          <account-widget field="marketCollectionAddress" label="Market Collection Address"
+          placeholder="Market Collection Address"></account-widget>
         </action-card>
       
         <!-- TODO: Implement this action card -->
         <!-- NOTE: This is a script -->
-        <action-card title="DAY 4: Kitty Items Market - Read Sale Collection IDs">
-      
+        <action-card title="DAY 4: Kitty Items Market - Read Sale Collection IDs" action="kittyItemsMarketReadSaleCollectionIDs" method="get"
+        fields="marketCollectionAddress">
+        <account-widget field="marketCollectionAddress" label="Market Collection Address"
+        placeholder="Market Collection Address"></account-widget>
         </action-card>
       
         <action-card title="DAY 4: Kitty Items Market - Read Sale Collection Length"
