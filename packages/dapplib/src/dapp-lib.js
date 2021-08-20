@@ -177,8 +177,27 @@ module.exports = class DappLib {
   // Note #2: the proposer is always `config.accounts[0]`
   // because that is the only account with the NFTMinter Resource
   //
-  static async kittyItemsMintKittyItem(data) {
 
+  static async kittyItemsMintKittyItem(data) {
+    let config = DappLib.getConfig()
+    let result = await Blockchain.post({
+      config: config,
+      roles: {
+        proposer: config.accounts[0]
+      }
+    },
+      'kittyitems_mint_kitty_item',
+      {
+        recipient: { value: data.recipient, type: t.Address },
+        typeID: { value: parseInt(data.typeID), type: t.UInt64 }
+      }
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: 'Transaction Hash',
+      result: result.callData.transactionId
+    }
   }
 
   // TODO: kittyItemsTransferKittyItem
@@ -191,7 +210,24 @@ module.exports = class DappLib {
   // 2) withdrawID
   //
   static async kittyItemsTransferKittyItem(data) {
+    let result = await Blockchain.post({
+      config: DappLib.getConfig(),
+      roles: {
+        proposer: data.signer
+      }
+    },
+      'kittyitems_transfer_kitty_item',
+      {
+        recipient: { value: data.recipient, type: t.Address },
+        withdrawID: { value: parseInt(data.withdrawID), type: t.UInt64 }
+      }
+    );
 
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: 'Transaction Hash',
+      result: result.callData.transactionId
+    }
   }
 
   // TODO: kittyItemsReadCollectionIDs
@@ -205,7 +241,22 @@ module.exports = class DappLib {
   // Note #2: the return type should be DAPP_RESULT_ARRAY
   //
   static async kittyItemsReadCollectionIDs(data) {
+    let result = await Blockchain.get({
+      config: DappLib.getConfig(),
+      roles: {
+      }
+    },
+      'kittyitems_read_collection_ids',
+      {
+        address: { value: data.address, type: t.Address }
+      }
+    );
 
+    return {
+      type: DappLib.DAPP_RESULT_ARRAY,
+      label: 'Kitty Items Ids',
+      result: result.callData
+    }
   }
 
   // kittyItemsReadCollectionLength
